@@ -1,0 +1,55 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumberGuessingGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        boolean playAgain = true;
+        int totalScore = 0;
+
+        System.out.println("Welcome to the Number Guessing Game!");
+
+        while (playAgain) {
+            int numberToGuess = random.nextInt(100) + 1; 
+            int attemptsLeft = 10; 
+            int userGuess = 0;
+            boolean correctGuess = false;
+
+            System.out.println("\nI have selected a number between 1 and 100.");
+            System.out.println("You have 10 attempts to guess it!");
+
+            while (attemptsLeft > 0 && !correctGuess) {
+                System.out.print("\nEnter your guess: ");
+                userGuess = scanner.nextInt();
+                attemptsLeft--;
+
+                if (userGuess < numberToGuess) {
+                    System.out.println("Too low! Try again.");
+                } else if (userGuess > numberToGuess) {
+                    System.out.println("Too high! Try again.");
+                } else {
+                    System.out.println("Congratulations! You guessed the number correctly.");
+                    totalScore += attemptsLeft; 
+                    correctGuess = true;
+                }
+
+                if (!correctGuess) {
+                    System.out.println("Attempts left: " + attemptsLeft);
+                }
+            }
+
+            if (!correctGuess) {
+                System.out.println("Sorry, you've run out of attempts. The correct number was: " + numberToGuess);
+            }
+            System.out.print("\nWould you like to play another round? (yes/no): ");
+            String userResponse = scanner.next();
+            playAgain = userResponse.equalsIgnoreCase("yes");
+        }
+
+        System.out.println("\nGame Over! Your total score is: " + totalScore);
+        System.out.println("Thanks for playing!");
+
+        scanner.close();
+    }
+}
